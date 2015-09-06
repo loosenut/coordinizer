@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML><HEAD><TITLE>AutoCAD coordinizer</TITLE>
+  <LINK REL=StyleSheet HREF="/stylesheets/main.css" TYPE="text/css" MEDIA=screen>
+</HEAD>
+
+<BODY>
+
+<table width=500><tr><td>
+</td></tr></table>
+<table><tr><td colspan=3>
+<form name="getdata" method="post" action="go" class="myinputstyle">
+<textarea cols="66" rows="8" name="inputdata"></textarea>
+</td>
+<td valign="top">
+  <div style="padding: 10px;">
+    <p class="mylabelstyle"  style="font-size: 140%;">AutoCAD Coordinizer. </p>
+    <p class="mylabelstyle">Input text to convert to Northing/Easting format.</p>
+    <p class="mylabelstyle"><a href="/static/help.html">Instructions</a></div>
+  </div>
+</td>
+
+</tr>
+
+<tr valign="top"><td>
+<p class="mylabelstyle">Delimiter:<br>
+<input type="radio" name="delimiter" value="comma">comma<br>
+<input type="radio" name="delimiter" value="space">space<br>
+<input type="radio" name="delimiter" value="tab">tab<br>
+<input type="radio" name="delimiter" value="fslash">forward slash "/"<br>
+<input type="radio" name="delimiter" value="col" checked>two columns<br>
+</td>
+
+<td>
+<p class="mylabelstyle">Format:<Br>
+<input type="radio" name="format" value="NE">Nnnn.nn,Eeee.ee (N1453.3,E113.8)<br>
+<input type="radio" name="format" value="noNE" checked>nnn.nn,eee.ee (1453.3,113.8)<br>
+<input type="radio" name="format" value="XY">XY (113.8,1453.3)<br>
+</td>
+
+<td width="100" align="right" valign="top">
+<input type="image" value="submit"
+  border=0 WIDTH=75 HEIGHT=26 title="go" src="static/button.gif">
+</form>
+</td></tr></table>
+
+<DIV class="helpbox mylabelstyle" ID="helpboxx">
+Brought to you by <a href="http://rockmaster.wordpress.com/">Rockmaster's CAD Resources</a>.
+</DIV>
+</BODY></HTML>
