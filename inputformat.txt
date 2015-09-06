@@ -1,0 +1,22 @@
+Direct output from AutoCAD command window may be copied into input form.  This can also serve as test data.
+
+LIST 1 found
+
+                  LWPOLYLINE  Layer: "0"
+                            Space: Model space
+                   Handle = 4a9
+              Open
+    Constant width    0.0000
+              area   6423504.5343
+            length   13709.1295
+
+          at point  X=-1714.0993  Y=1709.9046  Z=   0.0000
+          at point  X=-1806.4055  Y=1360.6477  Z=   0.0000
+          at point  X= -24.6016  Y=  10.2969  Z=   0.0000
+          at point  X=1826.5059  Y=2078.9308  Z=   0.0000
+          at point  X=1470.4674  Y=1373.8272  Z=   0.0000
+          at point  X=1219.9218  Y= 708.2621  Z=   0.0000
+          at point  X=1997.9318  Y=-1439.9976  Z=   0.0000
+          at point  X=1167.1753  Y=-972.1251  Z=   0.0000
+          at point  X=-1476.7403  Y=-1762.8955  Z=   0.0000
+          at point  X=-1503.1135  Y=-925.9968  Z=   0.0000
