@@ -1,0 +1,175 @@
+#!/usr/bin/env python
+#
+# Copyright 2007 Google Inc.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+import string
+import cgi
+import os
+import re
+from google.appengine.ext.webapp import template
+import webapp2
+
+class MainPage(webapp2.RequestHandler):
+  def get(self):
+    path = os.path.join(os.path.dirname(__file__), 'index.html')
+    self.response.write(template.render(path,None))
+
+
+#function for standard output (not columns) / returns output
+def standout (xlist,ylist,delim,format):
+    if format == "XY":
+       xlist,ylist = ylist,xlist
+    output = ''
+
+    if delim == "space":
+      delchar = ' '
+    elif delim == "tab":
+      delchar = '\t'
+    elif delim == "fslash":
+      delchar = '/'
+    else:
+      delchar = ','
+
+    for index in range(len(xlist)):
+      if format == "NE":  #prepend N/S
+        if re.search(r'\-', ylist[index]):  #strip negative sign and pring S, else print N
+          output += 'S'
+          output += re.sub(r'\-','',ylist[index])  
+        else:
+          output += 'N'
+          output += ylist[index]
+      else:
+        output += ylist[index]
+
+      output += delchar
+
+      if format == "NE":  #prepend W/E
+        if re.search(r'\-', xlist[index]):  #strip negative sign and pring W, else print E
+          output += 'W'
+          output += re.sub(r'\-','',xlist[index])  
+        else:
+          output += 'E'
+          output += xlist[index]
+      else:
+        output += xlist[index]
+
+      output += '\n'
+
+    return output
+
+#end function standout
+
+
+
+def colout (xlist,ylist,format):
+    if format == "XY":
+       xlist,ylist = ylist,xlist
+
+    output = '<table class="standcol"><tr><td>\n'
+
+    for indey in range(len(ylist)):
+      if format == "NE":  #prepend N/S
+        if re.search(r'\-', ylist[indey]):  #strip negative sign and pring S, else print N
+          output += 'S'
+          output += re.sub(r'\-','',ylist[indey])  
+        else:
+          output += 'N'
+          output += ylist[indey]
+      else:
+        output += ylist[indey]
+      output += '<br>\n'
+
+    output += '</td><td>\n'
+
+    for index in range(len(xlist)):
+      if format == "NE":  #prepend N/S
+        if re.search(r'\-', xlist[index]):  #strip negative sign and pring W, else print E
+          output += 'W'
+          output += re.sub(r'\-','',xlist[index])  
+        else:
+          output += 'E'
+          output += xlist[index]
+      else:
+        output += xlist[index]
+      output += '<br>\n'
+
+    output += '</td></tr></table>\n'
+    return output
+
+#end function colout
+
+
+	
+class Go(webapp2.RequestHandler):
+  def post(self):
+    delimiter = self.request.get('delimiter')
+    format = self.request.get('format')
+    inputdata = self.request.get('inputdata')
+    inputdata = inputdata.encode('ascii')
+    # split textarea into individual lines:
+    nlines = inputdata.splitlines()  #splitlines returns a list
+    # throw out lines without "X="
+    xlines = []
+    for val in nlines:
+      test = val.find('X=')
+      if test >= 0 :
+        #self.response.out.write(val)
+        xlines.append(val)
+    #extract X and Y
+    progX = re.compile(r'X=\s*\-?\d+\.?\d*', re.I)
+    #progX = re.compile('\d*', re.I)
+    progY = re.compile(r'Y=\s*\-?\d+\.?\d*', re.I)
+    xparts = []
+    yparts = []
+    for val in xlines:
+      mX = progX.search(val)
+      mX = re.sub('X=\s*','',mX.group())
+      xparts.append(mX);
+      mY = progY.search(val)
+      mY = re.sub('Y=\s*','',mY.group())
+      yparts.append(mY);
+
+# delimiter = "comma", "space", "tab", "fslash", "col"
+# format = "NE" Nnnn.nn,Eeee.ee / "noNE" nnn.nn,eee.ee / "XY"
+
+    self.response.out.write('<html><HEAD><TITLE>AutoCAD coordinizer</TITLE>')
+    self.response.out.write('<LINK REL=StyleSheet HREF="/stylesheets/main.css" TYPE="text/css" MEDIA=screen></HEAD><body>')
+
+    if delimiter == "col":
+        finaloutput = colout (xparts,yparts,format)
+        self.response.out.write(finaloutput)
+    else:
+        self.response.out.write('<pre>')
+        finaloutput = standout (xparts,yparts,delimiter,format)
+        self.response.out.write(cgi.escape(finaloutput))
+        self.response.out.write('</pre>')
+    self.response.out.write('</body></html>')
+
+# end function post()
+
+
+app = webapp2.WSGIApplication(
+                                     [('/', MainPage),
+                                      ('/go', Go)],
+                                     debug=True)
+
+									 
+def main():
+  wsgiref.handlers.CGIHandler().run(app)
+  
+
+if __name__ == '__main__':
+  main()
