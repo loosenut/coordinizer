@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML><HEAD><TITLE>AutoCAD coordinizer instructions</TITLE>
+  <LINK REL=StyleSheet HREF="/stylesheets/main.css" TYPE="text/css" MEDIA=screen>
+  <link rel="stylesheet" href="/stylesheets/lytebox.css" type="text/css" media="screen" />
+  <script type="text/javascript" language="javascript" src="/static/js/lytebox.js"></script>
+
+</HEAD>
+<BODY>
+<table width=500><tr><td>
+<P class="mylabelstyle" style="font-size: 20pt !important">Welcome to the <a href="/">AutoCAD coordinizer</a>.<br>
+
+<DIV class="infobox">
+The intent of this app is to provide an easy way to create coordinate tables in your AutoCAD sheet files.  
+By using the ID or the LIST command, you can quickly produce a series of coordinates in the AutoCAD command line window (F2).
+Copy the results into the text area input box, select your format, and click the submit button.
+Copy and paste the output text into AutoCAD MTEXT. Size appropriately, and explode if desired.
+Note that "Two columns" is the only form of output that allows you to select each column separately,
+which is often useful for putting the output into a table.<br><br>
+<a href="coord1.html">View an animated demonstration (part 1)</a> <br>
+<a href="coord2.html">View an animated demonstration (part 2)</a> <br>
+<br><br>
+<a href="/static/sampletable.gif" rel="lytebox" title="sample coorindate table #1">View sample coordinate table #1</a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="/static/sampletable2.gif" rel="lytebox" title="sample coorindate table #2">View sample coordinate table #2</a><br><br>
+Note: it is up to you to keep track of the order of the points (I usually pre-label them in model space).
+<br><br><br>
+I prefer to create a polyline along all of the points I want to label, then use the LIST command to get a listing of all of the points.
+In this case, text will be the following format:
+<table width=500><tr><td>
+<pre>
+          at point  X=  -1.0188  Y=  53.2685  Z=   0.0000
+          at point  X=  26.5579  Y=  61.9226  Z=   0.0000
+          at point  X=  42.6977  Y=  36.6014  Z=   0.0000
+          at point  X=  63.7543  Y=  46.8581  Z=   0.0000
+          at point  X=  77.0082  Y=  56.0464  Z=   0.0000
+</pre>
+<br>
+
+It is also possible to use the ID command, in which case text will be the following format:
+<pre>Command: id ID Specify point:  X = 15500.82     Y = 15197.36     Z = -9999.70
+Command:
+ID Specify point:  X = 15485.51     Y = 15201.00     Z = -9999.70
+Command:
+Specify point: cen of  X = 15507.47     Y = 15166.97     Z = 0.00</pre>
+
+I expect most people will be using one of the two formats above, but other formats are possible.  
+Essentially, the format must include "X = xxxxxxxx" and "Y = xxxxxxxx" (with optional decimal points and spaces), in that order, with each <b>set</b> of coordinates occuring on a different line.  
+Everything except for X and Y values will be discarded.  
+</div>
+</td></tr></table>
+<br>
+
+
+<DIV class="helpbox mylabelstyle" ID="helpboxx">
+Brought to you by <a href="http://rockmaster.wordpress.com/">Rockmaster's CAD Resources</a>.
+</DIV>
+</BODY></HTML>
