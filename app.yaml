@@ -1,0 +1,27 @@
+application: coordinizinator
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /
+  script: coordinizinator.app
+
+- url: /go
+  script: coordinizinator.app
+
+
+- url: /static
+  static_dir: static
+  
+- url: /stylesheets
+  static_dir: stylesheets
+
+- url: /(.*\.(gif|png|jpg))$
+  static_files: static/\1
+  upload: static/.*\.(gif|png|jpg)$
+
+libraries:
+- name: webapp2
+  version: latest
